@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Noto_Serif, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import ThemeSwitch from "@/components/ThemeSwitch";
+import { ColorThemeProvider } from "@/components/ColorThemeProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,11 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased bg-neutral-50 dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50 h-screen w-full`}
+        className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased bg-white dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50 h-screen w-full`}
       >
-        <Providers>{children}</Providers>
-
-        <ThemeSwitch />
+        <Providers>
+          <ColorThemeProvider>{children}</ColorThemeProvider>
+        </Providers>
       </body>
     </html>
   );

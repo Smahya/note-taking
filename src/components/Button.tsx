@@ -3,11 +3,12 @@ import { cn } from "@/lib/utils";
 import Refresh from "@/assets/icons/refresh.svg";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "border";
+  variant?: "primary" | "secondary" | "border" | "link" | "destructive";
   children: ReactNode;
   icon?: ReactNode;
   block?: boolean;
   loading?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 export const Button = ({
@@ -18,6 +19,7 @@ export const Button = ({
   disabled,
   block,
   loading,
+  type = "button",
   ...props
 }: ButtonProps) => {
   const baseStyles =
@@ -28,19 +30,29 @@ export const Button = ({
       "bg-blue-500 text-white",
       "hover:bg-blue-700 hover:ring-2 hover:ring-blue-200 hover:ring-offset-2",
       "active:bg-blue-800",
-      "disabled:bg-neutral-100 disabled:text-neutral-400 disabled:hover:ring-0 disabled:hover:ring-offset-0"
+      "disabled:opacity-50 disabled:hover:ring-0 disabled:hover:ring-offset-0"
     ),
     secondary: cn(
       "bg-neutral-100 text-neutral-900",
       "hover:bg-neutral-200 hover:ring-2 hover:ring-neutral-200 hover:ring-offset-2",
       "active:bg-neutral-300",
-      "disabled:bg-neutral-50 disabled:text-neutral-400 disabled:hover:ring-0 disabled:hover:ring-offset-0"
+      "disabled:opacity-50 disabled:hover:ring-0 disabled:hover:ring-offset-0"
     ),
     border: cn(
       "bg-white text-neutral-900 border-2 border-neutral-200",
       "hover:bg-neutral-50 hover:ring-2 hover:ring-neutral-200 hover:ring-offset-2",
       "active:bg-neutral-100",
-      "disabled:bg-neutral-50 disabled:text-neutral-400 disabled:border-neutral-100 disabled:hover:ring-0 disabled:hover:ring-offset-0"
+      "disabled:opacity-50 disabled:border-neutral-100 disabled:hover:ring-0 disabled:hover:ring-offset-0"
+    ),
+    link: cn(
+      "bg-transparent text-blue-500 p-0 text-underline",
+      "hover:bg-transparent hover:ring-0 hover:ring-offset-0",
+      "active:bg-transparent"
+    ),
+    destructive: cn(
+      "bg-red-500 text-white",
+      "hover:bg-red-700 hover:ring-2 hover:ring-red-200 hover:ring-offset-2",
+      "active:bg-red-800"
     ),
   };
 
@@ -48,8 +60,10 @@ export const Button = ({
     <button
       className={cn(baseStyles, variants[variant], className, {
         "w-full flex justify-center items-center": block,
+        "disabled:cursor-not-allowed": disabled,
       })}
       disabled={disabled}
+      type={type}
       {...props}
     >
       {icon && <span className="w-4 h-4">{icon}</span>}
