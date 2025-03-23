@@ -29,7 +29,12 @@ export async function createNote({
   if (noteId) {
     const response = await supabaseClient
       .from(SUPABASE_TABLES.NOTES)
-      .update({ ...payload, user, tags: newTagNames?.join(",") })
+      .update({
+        ...payload,
+        user,
+        tags: newTagNames?.join(","),
+        updated_at: new Date().toISOString(),
+      })
       .match({ uuid: noteId, user })
       .select("*"); // Returns all columns from the updated row
     return queryResponse(response);

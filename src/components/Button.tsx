@@ -33,15 +33,15 @@ export const Button = ({
       "disabled:opacity-50 disabled:hover:ring-0 disabled:hover:ring-offset-0"
     ),
     secondary: cn(
-      "bg-neutral-100 text-neutral-900",
+      "bg-neutral-100 dark:bg-neutral-500 text-neutral-900 dark:text-neutral-200",
       "hover:bg-neutral-200 hover:ring-2 hover:ring-neutral-200 hover:ring-offset-2",
       "active:bg-neutral-300",
       "disabled:opacity-50 disabled:hover:ring-0 disabled:hover:ring-offset-0"
     ),
     border: cn(
-      "bg-white text-neutral-900 border-2 border-neutral-200",
-      "hover:bg-neutral-50 hover:ring-2 hover:ring-neutral-200 hover:ring-offset-2",
-      "active:bg-neutral-100",
+      "bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 border-2 border-neutral-200 dark:border-neutral-800",
+      "hover:bg-neutral-50 hover:ring-2 hover:ring-neutral-200 hover:ring-offset-2 dark:hover:bg-neutral-800 dark:hover:ring-neutral-800",
+      "active:bg-neutral-100 dark:active:bg-neutral-800",
       "disabled:opacity-50 disabled:border-neutral-100 disabled:hover:ring-0 disabled:hover:ring-offset-0"
     ),
     link: cn(

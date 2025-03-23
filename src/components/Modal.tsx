@@ -23,7 +23,7 @@ export const Modal = ({
 
         <div
           onClick={(e) => e.stopPropagation()}
-          className="grid bg-white border border-neutral-200 w-[440px] m-auto rounded-lg min-h-40"
+          className="grid bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-800 w-[440px] m-auto rounded-lg min-h-40"
         >
           <div>{children}</div>
         </div>

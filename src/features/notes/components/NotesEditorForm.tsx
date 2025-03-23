@@ -10,24 +10,9 @@ import { Button, useToast } from "@/components";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "../service/service";
 import { useUser } from "@/hooks/useUser";
-import { useNotesContext } from "../context/NotesContext";
 import { Note } from "@/types/database";
-import { useNotesDataContext } from "../context/NotesDataContext";
 
-export const NotesEditor = () => {
-  const { hasNotes } = useNotesContext();
-  const { activeNote } = useNotesDataContext();
-
-  return (
-    <div className="w-full p-6">
-      {hasNotes ? (
-        <NotesForm key={activeNote?.uuid} activeNote={activeNote!} />
-      ) : null}
-    </div>
-  );
-};
-
-const NotesForm = ({ activeNote }: { activeNote: Note }) => {
+export const NotesEditorForm = ({ activeNote }: { activeNote: Note }) => {
   const toast = useToast();
   const user = useUser();
   const queryClient = useQueryClient();

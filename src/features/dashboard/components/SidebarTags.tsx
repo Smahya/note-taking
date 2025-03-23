@@ -4,9 +4,18 @@ import { cn } from "@/lib/utils";
 import { useTags } from "../hooks/useTags";
 import TagIcon from "@/assets/icons/tag.svg";
 import { LoadingWrapper, Text } from "@/components";
+import { useRouter, usePathname } from "next/navigation";
+import { useQueryString } from "@/hooks/useQueryString";
 
 export function SidebarTags() {
   const { data: tags, isLoading } = useTags();
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const { createQueryString, searchParams } = useQueryString();
+  const activeTag = searchParams.get("tag");
+
   return (
     <div className="grid content-start gap-1 border-t border-neutral-200 dark:border-neutral-800 py-4 min-h-60">
       <Text variant="body1" className="text-neutral-500 dark:text-neutral-400">
@@ -15,7 +24,7 @@ export function SidebarTags() {
       <LoadingWrapper isLoading={isLoading} loaderClassName="my-10">
         <div className="grid content-start gap-1 my-4">
           {tags?.map((tag) => {
-            const isActive = tag.id === "1";
+            const isActive = tag.tag_name === activeTag;
             return (
               <button
                 key={tag.id}
@@ -23,7 +32,11 @@ export function SidebarTags() {
                   "w-full flex items-center justify-between gap-2 group/item hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-md",
                   isActive && "bg-neutral-100 dark:bg-neutral-800"
                 )}
-                onClick={() => {}}
+                onClick={() => {
+                  router.push(
+                    pathname + "?" + createQueryString("tag", tag.tag_name)
+                  );
+                }}
               >
                 <div className="flex items-center gap-2">
                   <TagIcon className="group-hover/item:text-blue-500" />

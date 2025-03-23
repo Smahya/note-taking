@@ -4,7 +4,7 @@ import { supabaseClient } from "@/utils/supabase/client";
 import { queryResponse } from "@/utils/helpers";
 import { SUPABASE_TABLES } from "@/utils/constants";
 
-export const useGetListNotes = (isArchived: boolean) => {
+export const useGetListNotes = (isArchived: boolean, tag?: string) => {
   const user = useUser();
 
   return useQuery({
@@ -13,7 +13,14 @@ export const useGetListNotes = (isArchived: boolean) => {
       if (!user?.id) throw new Error("User ID is required");
       return getListNotes(user.id, isArchived);
     },
-    select: (data) => data,
+    select: (data) => {
+      if (tag) {
+        return data?.filter((note) =>
+          note.tags?.toLowerCase()?.split(",").includes(tag)
+        );
+      }
+      return data;
+    },
   });
 };
 

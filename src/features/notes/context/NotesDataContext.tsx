@@ -44,8 +44,9 @@ export const NotesDataProvider = ({
   const [activeNote, setActiveNote] = useState<Note | null>(null);
 
   const isArchived = useMemo(() => pathname.includes("archived"), [pathname]);
+  const tag = useMemo(() => searchParams.get("tag"), [searchParams]);
   const noteId = searchParams.get(NOTE_ID_KEY);
-  const notesQuery = useGetListNotes(isArchived);
+  const notesQuery = useGetListNotes(isArchived, tag!);
 
   const handleNoteClick = useCallback(
     (note: Note, isNew?: boolean) => {

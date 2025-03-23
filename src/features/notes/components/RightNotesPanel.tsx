@@ -122,20 +122,20 @@ const PromptModal = ({
   return (
     <div>
       <div className="flex gap-4 p-4">
-        <div className="w-10 h-10 flex items-center justify-center bg-neutral-100 rounded-lg flex-shrink-0">
+        <div className="text-neutral-900 dark:text-neutral-100 w-10 h-10 flex items-center justify-center bg-neutral-100 dark:bg-neutral-600 rounded-lg flex-shrink-0">
           {icons[type]}
         </div>
         <div className="grid content-start gap-1.5">
           <Text variant="h3" className="capitalize">
             {type} Note
           </Text>
-          <Text variant="body1" className="text-neutral-700">
+          <Text variant="body1" className="">
             {descriptions[type]}
           </Text>
         </div>
       </div>
 
-      <div className="border-t border-neutral-200 p-4 flex justify-end gap-4">
+      <div className="border-t border-neutral-200 dark:border-neutral-600 p-4 flex justify-end gap-4">
         <Button onClick={closeModal} variant="secondary">
           Cancel
         </Button>
