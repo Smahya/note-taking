@@ -4,7 +4,7 @@ import { typography, TypographyVariant } from "../styles/typography";
 import { cn } from "@/lib/utils";
 
 type AllowedElements = Extract<
-  keyof JSX.IntrinsicElements,
+  keyof React.JSX.IntrinsicElements,
   "p" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "div"
 >;
 
