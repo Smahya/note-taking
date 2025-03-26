@@ -1,3 +1,4 @@
+import { HTMLAttributes } from "react";
 export type TypographyVariant =
   | "h1"
   | "h2"
@@ -5,7 +6,7 @@ export type TypographyVariant =
   | "body1"
   | "body2"
   | "small";
-type className = React.HTMLAttributes<HTMLElement>["className"];
+type className = HTMLAttributes<HTMLElement>["className"];
 
 export const typography: Record<TypographyVariant, className> = {
   h1: "font-bold text-2xl leading-[120%] tracking-[-0.5px]", // Text Preset 1
