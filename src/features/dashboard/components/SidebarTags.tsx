@@ -4,17 +4,14 @@ import { cn } from "@/lib/utils";
 import { useTags } from "../hooks/useTags";
 import TagIcon from "@/assets/icons/tag.svg";
 import { LoadingWrapper, Text } from "@/components";
-import { useRouter, usePathname } from "next/navigation";
-import { useQueryString } from "@/hooks/useQueryString";
+import { useQueryState } from "nuqs";
+import { useMemo } from "react";
 
 export function SidebarTags() {
+  const [searchParams, setSearchParams] = useQueryState("tag");
   const { data: tags, isLoading } = useTags();
 
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const { createQueryString, searchParams } = useQueryString();
-  const activeTag = searchParams.get("tag");
+  const activeTag = useMemo(() => searchParams, [searchParams]);
 
   return (
     <div className="grid content-start gap-1 border-t border-neutral-200 dark:border-neutral-800 py-4 min-h-60">
@@ -33,9 +30,7 @@ export function SidebarTags() {
                   isActive && "bg-neutral-100 dark:bg-neutral-800"
                 )}
                 onClick={() => {
-                  router.push(
-                    pathname + "?" + createQueryString("tag", tag.tag_name)
-                  );
+                  setSearchParams(tag.tag_name);
                 }}
               >
                 <div className="flex items-center gap-2">

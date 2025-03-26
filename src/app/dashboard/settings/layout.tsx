@@ -1,5 +1,3 @@
-"use client";
-
 import { SettingsLayoutWrapper } from "@/features/settings/components/SettingsLayout";
 
 export default function SettingsLayout({

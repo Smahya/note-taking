@@ -14,7 +14,7 @@ import { useLogout } from "@/hooks/useLogout";
 export const SettingsSidebar = forwardRef<
   HTMLDivElement,
   { className?: string; onClick?: () => void }
->(({ className, onClick }, ref) => {
+>(({ className }, ref) => {
   const pathname = usePathname();
   const logout = useLogout();
   return (
@@ -28,25 +28,26 @@ export const SettingsSidebar = forwardRef<
       <Text variant="h1" className="block md:hidden mb-2">
         Settings
       </Text>
-      {sidebarItems.map((item) => (
-        <SidebarItem
-          key={item.href}
-          {...item}
-          isActive={item.href === pathname}
-          // onClick={onClick}
-        />
-      ))}
-      <button
-        onClick={logout}
-        className={cn(
-          "w-full flex items-center gap-2 group/item hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-md"
-        )}
-      >
-        <LogoutIcon />
-        <Text className="ml-2" variant="body1">
-          Logout
-        </Text>
-      </button>
+      <div className="grid content-start gap-2">
+        {sidebarItems.map((item) => (
+          <SidebarItem
+            key={item.href}
+            {...item}
+            isActive={item.href === pathname}
+          />
+        ))}
+        <button
+          onClick={logout}
+          className={cn(
+            "w-full flex items-center gap-2 group/item hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-md"
+          )}
+        >
+          <LogoutIcon />
+          <Text className="ml-2" variant="body1">
+            Logout
+          </Text>
+        </button>
+      </div>
     </div>
   );
 });

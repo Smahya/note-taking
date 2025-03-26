@@ -4,10 +4,10 @@ import { Text } from "@/components/Text";
 import SunIcon from "@/assets/icons/sun.svg";
 import MoonIcon from "@/assets/icons/moon.svg";
 import SunMoonIcon from "@/assets/icons/sun-moon.svg";
-import { useColorTheme } from "../hooks/useColorTheme";
 import { ThemeSelectorButton } from "../components/ThemeButton";
 import { Button } from "@/components";
 import { useState } from "react";
+import { useColorTheme } from "@/context/ColorContext";
 
 export default function SettingsColorThemePage() {
   const { activeTheme, handleThemeChange } = useColorTheme();

@@ -7,8 +7,8 @@ import MonospaceIcon from "@/assets/icons/mono.svg";
 import { ThemeSelectorButton } from "../components/ThemeButton";
 import { useState } from "react";
 import { Button } from "@/components";
-import { useFontTheme } from "../hooks/useFontTheme";
 import { FontTheme } from "@/types/utils";
+import { useFontTheme } from "@/context/FontContext";
 
 export default function SettingsFontThemePage() {
   const { activeFont, handleFontChange } = useFontTheme();

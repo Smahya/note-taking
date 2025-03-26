@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import MDEditor from "@uiw/react-md-editor";
 import { z } from "zod";
 import { TitleInput, TagsInput, LastEdited } from "./Shared";
@@ -11,6 +8,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "../service/service";
 import { useUser } from "@/hooks/useUser";
 import { Note } from "@/types/database";
+
+import { EditorWrapper } from "./EditorWrapper";
 
 export const NotesEditorForm = ({ activeNote }: { activeNote: Note }) => {
   const toast = useToast();
@@ -69,10 +68,7 @@ export const NotesEditorForm = ({ activeNote }: { activeNote: Note }) => {
         <LastEdited lastEdited={activeNote?.updated_at} />
       </div>
 
-      <div
-        className="max-w-[400px] content-start"
-        data-color-mode={localStorage.getItem("theme")}
-      >
+      <EditorWrapper>
         <Controller
           control={control}
           name="note"
@@ -96,7 +92,7 @@ export const NotesEditorForm = ({ activeNote }: { activeNote: Note }) => {
             />
           )}
         />
-      </div>
+      </EditorWrapper>
 
       <div className="hidden justify-start lg:flex gap-2 border-t border-neutral-200 dark:border-neutral-800 pt-4">
         <Button

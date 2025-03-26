@@ -1,8 +1,9 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { NOTE_ID_KEY } from "../contants";
+import { useQueryState } from "nuqs";
 
 type NoteType = "notes" | "archived";
 type NotesContextType = {
@@ -27,12 +28,11 @@ export const useNotesContext = () => {
 
 export const NotesProvider = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [noteId] = useQueryState(NOTE_ID_KEY);
 
   const [type, setType] = useState<"notes" | "archived">("notes");
 
   const isArchived = useMemo(() => pathname.includes("archived"), [pathname]);
-  const noteId = searchParams.get(NOTE_ID_KEY);
   const hasNotes = !!noteId;
 
   useEffect(() => {

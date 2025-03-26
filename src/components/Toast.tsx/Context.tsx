@@ -1,3 +1,5 @@
+"use client";
+
 import { ToastNotificationType } from "@/types/utils";
 import React from "react";
 

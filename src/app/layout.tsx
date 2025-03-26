@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Noto_Serif, Source_Code_Pro } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { ColorThemeProvider } from "@/components/ColorThemeProvider";
+import { ColorThemeProvider } from "@/context/ColorContext";
+import { FontProvider } from "@/context/FontContext";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,9 +39,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${notoSerif.variable} ${sourceCodePro.variable} antialiased bg-white dark:bg-neutral-950 text-neutral-950 dark:text-neutral-50 h-screen w-full`}
       >
-        <Providers>
-          <ColorThemeProvider>{children}</ColorThemeProvider>
-        </Providers>
+        <NuqsAdapter>
+          <Providers>
+            <ColorThemeProvider>
+              <FontProvider>{children}</FontProvider>
+            </ColorThemeProvider>
+          </Providers>
+        </NuqsAdapter>
       </body>
     </html>
   );

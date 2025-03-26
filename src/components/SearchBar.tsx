@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import SearchIcon from "@/assets/icons/search.svg";
 import { Note } from "@/types/database";
+import { useDocument } from "@/hooks/useDocument";
 interface SearchBarProps {
   onSelect: (selected: Note) => void;
   results: Note[];
@@ -21,7 +22,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   onChange,
 }) => {
   const searchRef = useRef<HTMLDivElement>(null);
-
+  const { _document } = useDocument();
   useEffect(() => {
     // Handle clicking outside of search results
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,8 +34,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    _document?.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      _document?.removeEventListener("mousedown", handleClickOutside);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

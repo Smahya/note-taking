@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -12,6 +12,7 @@ import {
 import { NOTE_ID_KEY } from "../contants";
 import { useGetListNotes } from "../service/hooks";
 import { Note } from "@/types/database";
+import { parseAsString, useQueryStates } from "nuqs";
 
 type NotesDataContextType = {
   notesQuery: ReturnType<typeof useGetListNotes>;
@@ -39,13 +40,16 @@ export const NotesDataProvider = ({
   children: React.ReactNode;
 }) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const [searchParams] = useQueryStates({
+    [NOTE_ID_KEY]: parseAsString,
+    tag: parseAsString,
+  });
   const router = useRouter();
   const [activeNote, setActiveNote] = useState<Note | null>(null);
 
   const isArchived = useMemo(() => pathname.includes("archived"), [pathname]);
-  const tag = useMemo(() => searchParams.get("tag"), [searchParams]);
-  const noteId = searchParams.get(NOTE_ID_KEY);
+  const tag = useMemo(() => searchParams.tag, [searchParams]);
+  const noteId = useMemo(() => searchParams.noteId, [searchParams]);
   const notesQuery = useGetListNotes(isArchived, tag!);
 
   const handleNoteClick = useCallback(

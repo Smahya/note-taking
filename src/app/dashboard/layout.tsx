@@ -1,5 +1,9 @@
 import DashboardLayout from "@/features/dashboard/components/DashboardLayout";
-
+import { CustomSuspense } from "@/components";
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return (
+    <CustomSuspense>
+      <DashboardLayout>{children}</DashboardLayout>
+    </CustomSuspense>
+  );
 }
