@@ -8,9 +8,6 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
-import Link from "next/link";
-import { GoogleLogin } from "../components/GoogleLogin";
 import { useToast } from "@/components";
 import { registerUser } from "../services";
 
@@ -32,16 +29,12 @@ export default function Register() {
   );
 
   const { mutate: registerMutation, isPending } = useMutation({
-    mutationFn: async (payload: {
-      email: string;
-      password: string;
-      // data: { confirmation_sent_at: "" };
-    }) => {
+    mutationFn: async (payload: { email: string; password: string }) => {
       return await registerUser(payload);
     },
     onSuccess: () => {
       toast.success("Sign up successful");
-      router.push("/dashboard");
+      router.push("/");
     },
   });
 
@@ -75,19 +68,15 @@ export default function Register() {
           error={formState.errors.password?.message}
           hint="At least 8 characters"
         />
-        <Button block type="submit" disabled={isPending} loading={isPending}>
+        <Button
+          block
+          type="submit"
+          disabled={isPending}
+          loading={isPending}
+          className="mt-8"
+        >
           Sign up
         </Button>
-
-        <div className="divider" />
-        <Text
-          variant="body2"
-          className="text-center text-neutral-600 dark:text-neutral-300 my-2"
-        >
-          Or log in with:
-        </Text>
-        <GoogleLogin />
-        <div className="divider" />
 
         <div className="flex items-center justify-center gap-1.5">
           <Text
@@ -96,11 +85,13 @@ export default function Register() {
           >
             No account yet?{" "}
           </Text>
-          <Link href="/">
-            <Text variant="body2" className="text-neutral-950 dark:text-white">
-              Login
-            </Text>
-          </Link>
+          <button
+            type="button"
+            onClick={() => router.push("/auth/login")}
+            className="text-neutral-950 dark:text-white font-semibold cursor-pointer text-sm leading-[120%] tracking-[-0.2px]"
+          >
+            Login
+          </button>
         </div>
       </form>
     </div>

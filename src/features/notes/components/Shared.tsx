@@ -30,7 +30,7 @@ export const TagsInput = React.forwardRef(function TagsInput(
   ref: React.Ref<HTMLInputElement>
 ) {
   return (
-    <div className="grid grid-cols-[110px_1fr] items-center gap-2">
+    <div className="grid grid-cols-[120px_1fr] items-center gap-2">
       <Text variant="body2" className="flex items-center gap-2">
         <TagIcon className="text-xs" />
         Tags
@@ -51,10 +51,10 @@ export const TagsInput = React.forwardRef(function TagsInput(
 
 export function LastEdited({ lastEdited }: { lastEdited?: string }) {
   return (
-    <div className="grid grid-cols-[110px_1fr] items-center gap-2">
+    <div className="grid grid-cols-[120px_1fr] items-center gap-2">
       <Text variant="body2" className="flex items-center gap-2">
-        <ClockIcon className="text-neutral-700 dark:text-neutral-400" />
-        Last edited
+        <ClockIcon />
+        <span className="whitespace-nowrap">Last edited</span>
       </Text>
       <Text variant="body2">
         {lastEdited ? formatDate(lastEdited) : "Not yet saved"}

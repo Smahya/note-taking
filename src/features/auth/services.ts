@@ -22,7 +22,6 @@ export async function resetEmailVerification(email: string) {
 export async function registerUser(payload: {
   email: string;
   password: string;
-  // data: { confirmation_sent_at: string };
 }) {
   const supabase = await createClient();
   const response = await supabase.auth.signUp(payload);
@@ -53,7 +52,7 @@ export async function loginWithGoogle() {
 //   },
 //   onSuccess: () => {
 //     toast.success("Login successful");
-//     router.push("/dashboard");
+//     router.push("/");
 //   },
 //   onError: (err: AuthApiError) => {
 //     const action =

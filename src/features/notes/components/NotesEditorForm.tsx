@@ -30,7 +30,7 @@ export const NotesEditorForm = ({ activeNote }: { activeNote: Note }) => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: z.infer<typeof schema>) => {
+    mutationFn: (data: z.infer<typeof schema> & { archived: boolean }) => {
       return createNote({
         payload: data,
         user: user?.id!,
@@ -52,7 +52,7 @@ export const NotesEditorForm = ({ activeNote }: { activeNote: Note }) => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    mutate(data);
+    mutate({ ...data, archived: false });
   });
 
   return (

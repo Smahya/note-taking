@@ -8,10 +8,7 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
 import { useToast } from "@/components";
-import { GoogleLogin } from "../components/GoogleLogin";
-import { AuthApiError } from "@supabase/supabase-js";
 import { login } from "../services";
 
 export default function LoginPage() {
@@ -20,7 +17,7 @@ export default function LoginPage() {
 
   const schema = z.object({
     email: z.string().email(),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+    password: z.string(),
   });
 
   const { register, handleSubmit, formState } = useForm<z.infer<typeof schema>>(
@@ -29,32 +26,16 @@ export default function LoginPage() {
     }
   );
 
-  async function resetEmailVerification() {
-    // // Here's how to resend the confirmation email in Supabase
-    // const { data, error } = await supabase.auth.resend({
-    //   type: "signup",
-    //   email: getValues("email"),
-    // });
-    // console.log("data", data);
-    // console.log("error", error);
-  }
-
   const { mutate: loginMutation, isPending } = useMutation({
     mutationFn: async (payload: { email: string; password: string }) => {
       return await login(payload);
     },
     onSuccess: () => {
       toast.success("Login successful");
-      router.push("/dashboard");
+      router.push("/");
     },
-    onError: (err: AuthApiError) => {
-      const action =
-        err.code === "email_not_confirmed" ? (
-          <Button variant="link" onClick={resetEmailVerification}>
-            Resend email
-          </Button>
-        ) : null;
-      toast.error("Login failed", action);
+    onError: () => {
+      toast.error("Login failed");
     },
   });
 
@@ -86,21 +67,16 @@ export default function LoginPage() {
           type="password"
           {...register("password")}
           error={formState.errors.password?.message}
-          hint="At least 8 characters"
         />
-        <Button block type="submit" disabled={isPending} loading={isPending}>
+        <Button
+          block
+          type="submit"
+          disabled={isPending}
+          loading={isPending}
+          className="mt-8"
+        >
           Login
         </Button>
-
-        <div className="divider" />
-        <Text
-          variant="body2"
-          className="text-center text-neutral-600 dark:text-neutral-300 my-2"
-        >
-          Or log in with:
-        </Text>
-        <GoogleLogin />
-        <div className="divider" />
 
         <div className="flex items-center justify-center gap-1.5">
           <Text
@@ -109,11 +85,13 @@ export default function LoginPage() {
           >
             No account yet?{" "}
           </Text>
-          <Link href="/register">
-            <Text variant="body2" className="text-neutral-950 dark:text-white">
-              Sign up
-            </Text>
-          </Link>
+          <button
+            type="button"
+            onClick={() => router.push("/auth/register")}
+            className="text-neutral-950 dark:text-white font-semibold cursor-pointer text-sm leading-[120%] tracking-[-0.2px]"
+          >
+            Sign up
+          </button>
         </div>
       </form>
     </div>

@@ -34,27 +34,27 @@ export const NavbarMobile = ({ className }: { className?: string }) => {
 const routesItems = [
   {
     label: "Home",
-    href: "/dashboard",
+    href: "/",
     icon: <HomeIcon />,
   },
   {
     label: "Search",
-    href: "/dashboard/search",
+    href: "/search",
     icon: <SearchIcon />,
   },
   {
     label: "Archive",
-    href: "/dashboard/archive",
+    href: "/archive",
     icon: <ArchiveIcon />,
   },
   {
     label: "Tags",
-    href: "/dashboard/tags",
+    href: "/tags",
     icon: <TagIcon />,
   },
   {
     label: "Settings",
-    href: "/dashboard/settings",
+    href: "/settings",
     icon: <SettingsIcon />,
   },
 ];

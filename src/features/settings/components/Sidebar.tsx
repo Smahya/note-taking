@@ -57,17 +57,17 @@ SettingsSidebar.displayName = "SettingsSidebar";
 const sidebarItems = [
   {
     label: "Color Theme",
-    href: "/dashboard/settings",
+    href: "/settings",
     icon: <SunIcon />,
   },
   {
     label: "Font Theme",
-    href: "/dashboard/settings/font-theme",
+    href: "/settings/font-theme",
     icon: <FontIcon />,
   },
   {
     label: "Change Password",
-    href: "/dashboard/settings/change-password",
+    href: "/settings/change-password",
     icon: <LockIcon />,
   },
 ];

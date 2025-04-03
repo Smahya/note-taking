@@ -12,6 +12,7 @@ export async function createNote({
     title: string;
     note: string;
     tags: string;
+    archived: boolean;
   };
   user?: string;
   noteId?: string;

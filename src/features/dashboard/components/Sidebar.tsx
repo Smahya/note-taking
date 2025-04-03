@@ -43,11 +43,11 @@ const sidebarItems: {
   {
     label: "All Notes",
     icon: <HomeIcon />,
-    href: "/dashboard",
+    href: "/",
   },
   {
     label: "Archived Notes",
     icon: <ArchiveIcon />,
-    href: "/dashboard/archived",
+    href: "/archived",
   },
 ];

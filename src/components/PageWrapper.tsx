@@ -29,7 +29,7 @@ export const PageWrapper = ({
 
           <SettingsIcon
             className="cursor-pointer hidden lg:block"
-            onClick={() => router.push("/dashboard/settings")}
+            onClick={() => router.push("/settings")}
           />
         </div>
       </div>
