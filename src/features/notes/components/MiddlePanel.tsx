@@ -5,15 +5,28 @@ import { useNotesContext } from "../context/NotesContext";
 
 import { useNotesDataContext } from "../context/NotesDataContext";
 import { NotesEditorForm } from "./NotesEditorForm";
+import { cn } from "@/lib/utils";
 
-export const MiddlePanel = () => {
+export const MiddlePanel = ({
+  className,
+  setScreen,
+}: {
+  className?: string;
+  setScreen?: (screen: Record<string, any>) => void;
+}) => {
   const { hasNotes } = useNotesContext();
-  const { activeNote } = useNotesDataContext();
+  const { activeNote, setSearchParams, searchParams } = useNotesDataContext();
 
   return (
-    <div className="w-full p-6">
+    <div className={cn("w-full p-6", className)}>
       {hasNotes ? (
-        <NotesEditorForm key={activeNote?.uuid} activeNote={activeNote!} />
+        <NotesEditorForm
+          key={activeNote?.uuid}
+          activeNote={activeNote!}
+          setSearchParams={setSearchParams}
+          searchParams={searchParams}
+          setScreen={setScreen}
+        />
       ) : null}
     </div>
   );

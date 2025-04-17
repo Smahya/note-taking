@@ -8,9 +8,10 @@ import { SidebarItem } from "./SidebarItem";
 
 import { SidebarTags } from "./SidebarTags";
 import { usePathname } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 export default function Sidebar({ className }: { className?: string }) {
   const pathname = usePathname();
+  const router = useRouter();
   return (
     <div
       className={cn(
@@ -18,7 +19,13 @@ export default function Sidebar({ className }: { className?: string }) {
         className
       )}
     >
-      <AppLogo className="mb-4 ml-4" />
+      <div
+        className="mb-2 mt-2 ml-2 cursor-pointer"
+        onClick={() => router.push("/")}
+      >
+        <AppLogo />
+      </div>
+
       <div className="grid content-start gap-1 py-4">
         {sidebarItems.map((item) => {
           return (

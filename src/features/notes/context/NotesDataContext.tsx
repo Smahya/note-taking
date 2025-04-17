@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   createContext,
   useCallback,
@@ -18,6 +18,8 @@ type NotesDataContextType = {
   notesQuery: ReturnType<typeof useGetListNotes>;
   handleNoteClick: (note: Note, isNew?: boolean) => void;
   activeNote: Note | null;
+  setSearchParams: (params: Record<string, string>) => void;
+  searchParams: Record<string, any>;
 };
 
 export const NotesDataContext = createContext<NotesDataContextType>(
@@ -40,11 +42,10 @@ export const NotesDataProvider = ({
   children: React.ReactNode;
 }) => {
   const pathname = usePathname();
-  const [searchParams] = useQueryStates({
+  const [searchParams, setSearchParams] = useQueryStates({
     [NOTE_ID_KEY]: parseAsString,
     tag: parseAsString,
   });
-  const router = useRouter();
   const [activeNote, setActiveNote] = useState<Note | null>(null);
 
   const isArchived = useMemo(() => pathname.includes("archived"), [pathname]);
@@ -55,10 +56,10 @@ export const NotesDataProvider = ({
   const handleNoteClick = useCallback(
     (note: Note, isNew?: boolean) => {
       const id = isNew ? "new" : note.uuid;
-      router.push(`${pathname}?${NOTE_ID_KEY}=${id}`);
+      setSearchParams({ [NOTE_ID_KEY]: id });
       setActiveNote(note);
     },
-    [router, pathname]
+    [setSearchParams]
   );
 
   useEffect(() => {
@@ -81,6 +82,8 @@ export const NotesDataProvider = ({
       notesQuery,
       handleNoteClick,
       activeNote,
+      setSearchParams,
+      searchParams,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [notesQuery]

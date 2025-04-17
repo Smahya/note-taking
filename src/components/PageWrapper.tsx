@@ -17,27 +17,28 @@ export const PageWrapper = ({
   return (
     <div className="grid grid-rows-[max-content_1fr] app-background h-full overflow-y-auto">
       {/* NAVBAR */}
-      <div className="sticky top-0 z-50 app-background flex items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-neutral-800">
+      <div className="sticky top-0 z-50 app-background flex flex-wrap items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-neutral-800">
         <div className="flex items-center">
           <Text variant="h1" className="hidden lg:block">
             {title}
           </Text>
-          <AppLogo className="lg:hidden" />
+          <div
+            className="mb-2 mt-2 ml-2 cursor-pointer flex lg:hidden"
+            onClick={() => router.push("/")}
+          >
+            <AppLogo />
+          </div>
         </div>
         <div className="flex items-center gap-4">
           {navbarRight}
-
           <SettingsIcon
             className="cursor-pointer hidden lg:block"
             onClick={() => router.push("/settings")}
           />
         </div>
       </div>
-      {/* <Text variant="h1" className="block md:hidden pl-8 pt-4">
-        {title}
-      </Text> */}
-      {/* CONTENT */}
-      <div>{children}</div>
+
+      <div className="h-[calc(100vh-80px)] overflow-y-auto">{children}</div>
     </div>
   );
 };

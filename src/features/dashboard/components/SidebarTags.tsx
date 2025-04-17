@@ -6,10 +6,13 @@ import TagIcon from "@/assets/icons/tag.svg";
 import { LoadingWrapper, Text } from "@/components";
 import { useQueryState } from "nuqs";
 import { useMemo } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
-export function SidebarTags() {
-  const [searchParams, setSearchParams] = useQueryState("tag");
+export function SidebarTags({ onClick }: { onClick?: any }) {
+  const [searchParams] = useQueryState("tag");
   const { data: tags, isLoading } = useTags();
+  const pathname = usePathname();
 
   const activeTag = useMemo(() => searchParams, [searchParams]);
 
@@ -22,16 +25,20 @@ export function SidebarTags() {
         <div className="grid content-start gap-1 my-4">
           {tags?.map((tag) => {
             const isActive = tag.tag_name === activeTag;
+            const isArchived = pathname.includes("archived");
             return (
-              <button
+              <Link
+                href={`${
+                  isArchived
+                    ? `/archived?tag=${tag.tag_name}`
+                    : `/?tag=${tag.tag_name}`
+                }`}
                 key={tag.id}
                 className={cn(
                   "w-full flex items-center justify-between gap-2 group/item hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-md",
                   isActive && "bg-neutral-100 dark:bg-neutral-800"
                 )}
-                onClick={() => {
-                  setSearchParams(tag.tag_name);
-                }}
+                onClick={onClick}
               >
                 <div className="flex items-center gap-2">
                   <TagIcon className="group-hover/item:text-blue-500" />
@@ -39,7 +46,7 @@ export function SidebarTags() {
                     {tag.tag_name}
                   </Text>
                 </div>
-              </button>
+              </Link>
             );
           })}
         </div>

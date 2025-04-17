@@ -10,8 +10,10 @@ import { useUser } from "@/hooks/useUser";
 import { useQueryClient } from "@tanstack/react-query";
 import { deleteNote } from "../service/service";
 import { archiveNote } from "../service/service";
+import { cn } from "@/lib/utils";
+import ChevronRightMd from "@/assets/icons/chevron-right-md.svg";
 
-export const RightNotesPanel = () => {
+export const RightNotesPanel = ({ className }: { className?: string }) => {
   const { isArchived, hasNotes, noteId } = useNotesContext();
   const [type, setType] = useState<"archive" | "delete" | "restore" | null>(
     null
@@ -29,7 +31,12 @@ export const RightNotesPanel = () => {
   }
   return (
     hasNotes && (
-      <div className="grid content-start gap-4 border-l border-neutral-200 dark:border-neutral-800 p-4">
+      <div
+        className={cn(
+          "grid content-start gap-4 border-l border-neutral-200 dark:border-neutral-800 p-4",
+          className
+        )}
+      >
         {isArchived ? (
           <Button
             onClick={() => handleOpenModal("restore")}
@@ -68,15 +75,73 @@ export const RightNotesPanel = () => {
   );
 };
 
+export const RightNotesPanelMobile = ({
+  setScreen,
+  children,
+}: {
+  setScreen?: (screen: Record<string, any>) => void;
+  children?: React.ReactNode;
+}) => {
+  const { isArchived, noteId } = useNotesContext();
+  const [type, setType] = useState<"archive" | "delete" | "restore" | null>(
+    null
+  );
+
+  const [openModal, setOpenModal] = useState(false);
+  function handleOpenModal(type: "archive" | "delete" | "restore") {
+    setType(type);
+    setOpenModal(true);
+  }
+
+  function closeModal() {
+    setOpenModal(false);
+    setType(null);
+    setScreen?.({ screen: "left" });
+  }
+  return (
+    <div className="flex md:hidden items-center justify-between gap-4 pb-4 mb-4 border-b border-neutral-200 dark:border-neutral-800">
+      <button
+        className="flex items-center"
+        onClick={() => setScreen?.({ screen: "left" })}
+      >
+        <ChevronRightMd className="-rotate-180 relative -left-2" />
+        Go Back
+      </button>
+
+      <div className={cn("flex items-center gap-4")}>
+        {isArchived ? (
+          <div title="Restore Note">
+            <RestoreIcon onClick={() => handleOpenModal("restore")} />
+          </div>
+        ) : (
+          <div title="Archive Note">
+            <ArchiveIcon onClick={() => handleOpenModal("archive")} />
+          </div>
+        )}
+        <div title="Delete Note">
+          <DeleteIcon onClick={() => handleOpenModal("delete")} />
+        </div>
+        {children}
+        <Modal
+          open={openModal}
+          setOpen={(open) => {
+            setOpenModal(open);
+          }}
+        >
+          <PromptModal closeModal={closeModal} type={type!} noteId={noteId!} />
+        </Modal>
+      </div>
+    </div>
+  );
+};
+
 const PromptModal = ({
   type,
-
   noteId,
   closeModal,
 }: {
   type: "archive" | "delete" | "restore";
   noteId: string;
-
   closeModal: () => void;
 }) => {
   const icons: Record<"archive" | "delete" | "restore", React.ReactNode> = {

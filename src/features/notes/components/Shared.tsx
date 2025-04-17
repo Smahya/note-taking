@@ -7,6 +7,11 @@ import ClockIcon from "@/assets/icons/clock.svg";
 import React from "react";
 import { formatDate } from "@/utils/date-helpers";
 
+function capitalizeFirstLetter(str: string) {
+  if (typeof str !== "string") return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export const TitleInput = React.forwardRef(function TitleInput(
   props: React.InputHTMLAttributes<HTMLInputElement>,
   ref: React.Ref<HTMLInputElement>
@@ -15,9 +20,10 @@ export const TitleInput = React.forwardRef(function TitleInput(
     <input
       type="text"
       className={cn(
-        "w-full app-background text-neutral-950 placeholder:text-neutral-950 placeholder:font-bold placeholder:text-2xl focus:outline-none",
+        "w-full app-background placeholder:font-bold placeholder:text-2xl focus:outline-none",
         typography.h1
       )}
+      value={capitalizeFirstLetter(props.value as string)}
       placeholder="Enter a title…"
       ref={ref}
       {...props}
@@ -39,7 +45,7 @@ export const TagsInput = React.forwardRef(function TagsInput(
       <input
         type="text"
         className={cn(
-          "w-full capitalize app-background text-sm text-neutral-950 placeholder:text-neutral-400 placeholder:text-sm focus:outline-none"
+          "w-full capitalize app-background text-sm placeholder:text-sm focus:outline-none"
         )}
         placeholder="Add tags separated by commas (e.g. Work, Planning)"
         ref={ref}

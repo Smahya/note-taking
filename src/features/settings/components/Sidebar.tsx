@@ -2,7 +2,6 @@
 
 import SunIcon from "@/assets/icons/sun.svg";
 import FontIcon from "@/assets/icons/type.svg";
-import LockIcon from "@/assets/icons/lock.svg";
 import LogoutIcon from "@/assets/icons/logout.svg";
 import { cn } from "@/lib/utils";
 import { Text } from "@/components/Text";
@@ -14,7 +13,7 @@ import { useLogout } from "@/hooks/useLogout";
 export const SettingsSidebar = forwardRef<
   HTMLDivElement,
   { className?: string; onClick?: () => void }
->(({ className }, ref) => {
+>(({ className, onClick }, ref) => {
   const pathname = usePathname();
   const logout = useLogout();
   return (
@@ -34,6 +33,7 @@ export const SettingsSidebar = forwardRef<
             key={item.href}
             {...item}
             isActive={item.href === pathname}
+            onClick={onClick}
           />
         ))}
         <button
@@ -64,10 +64,5 @@ const sidebarItems = [
     label: "Font Theme",
     href: "/settings/font-theme",
     icon: <FontIcon />,
-  },
-  {
-    label: "Change Password",
-    href: "/settings/change-password",
-    icon: <LockIcon />,
   },
 ];

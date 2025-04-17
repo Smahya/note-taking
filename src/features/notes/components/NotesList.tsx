@@ -52,7 +52,9 @@ function NoteItem({
         index > 0 ? "border-b border-neutral-200 dark:border-neutral-800" : ""
       )}
     >
-      <Text variant="h3">{note.title}</Text>
+      <Text variant="h3" className="capitalize">
+        {note.title}
+      </Text>
       <div className="flex flex-wrap gap-2">
         {note.tags?.split(",").map((tag) => (
           <Tag key={tag}>{tag}</Tag>
