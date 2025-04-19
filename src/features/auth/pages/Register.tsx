@@ -36,6 +36,9 @@ export default function Register() {
       toast.success("Sign up successful");
       router.push("/");
     },
+    onError: () => {
+      toast.error("Sign up failed");
+    },
   });
 
   const onSubmit = handleSubmit((data) => {
@@ -83,7 +86,7 @@ export default function Register() {
             variant="body2"
             className="text-center text-neutral-600 dark:text-neutral-300"
           >
-            No account yet?{" "}
+            Already have an account?{" "}
           </Text>
           <button
             type="button"

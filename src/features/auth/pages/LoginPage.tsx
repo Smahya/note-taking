@@ -10,10 +10,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components";
 import { login } from "../services";
-
+import { useState } from "react";
 export default function LoginPage() {
   const router = useRouter();
   const toast = useToast();
+  const [isGuestLoginPending, setIsGuestLoginPending] = useState(false);
 
   const schema = z.object({
     email: z.string().email(),
@@ -31,6 +32,7 @@ export default function LoginPage() {
       return await login(payload);
     },
     onSuccess: () => {
+      setIsGuestLoginPending(false);
       toast.success("Login successful");
       router.push("/");
     },
@@ -43,18 +45,40 @@ export default function LoginPage() {
     loginMutation(data);
   });
 
+  function handleGuestLogin() {
+    setIsGuestLoginPending(true);
+    loginMutation({
+      email: "salnaj14@gmail.com",
+      password: "Password@1",
+    });
+  }
+
   return (
     <div className="grid gap-4">
       <div className="grid gap-2">
         <Text variant="h1" className="text-center">
           Welcome to Note
         </Text>
-        <Text variant="body2" className="text-center">
-          Please log in to continue
-        </Text>
+
+        <div className="flex items-center justify-center gap-1.5">
+          <Text
+            variant="body2"
+            className="text-center text-neutral-600 dark:text-neutral-300"
+          >
+            Don't want to create an account?{" "}
+          </Text>
+          <Button
+            form="login"
+            variant="link"
+            disabled={isPending || isGuestLoginPending}
+            onClick={handleGuestLogin}
+          >
+            {isGuestLoginPending ? "Logging in..." : "Login as guest"}
+          </Button>
+        </div>
       </div>
 
-      <form className="grid gap-4" onSubmit={onSubmit}>
+      <form id="login" className="grid gap-4" onSubmit={onSubmit}>
         <Input
           label="Email Address"
           placeholder="Email Address"
@@ -72,7 +96,7 @@ export default function LoginPage() {
           block
           type="submit"
           disabled={isPending}
-          loading={isPending}
+          loading={isPending && !isGuestLoginPending}
           className="mt-8"
         >
           Login
