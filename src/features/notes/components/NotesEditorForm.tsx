@@ -111,7 +111,7 @@ export const NotesEditorForm = ({
                 }}
                 hideToolbar={true}
                 preview="edit"
-                className="!shadow-none !p-0"
+                className="!shadow-none !p-0 bg-white dark:bg-neutral-950"
                 textareaProps={{
                   className: "",
                   placeholder: "Start typing your note here…",

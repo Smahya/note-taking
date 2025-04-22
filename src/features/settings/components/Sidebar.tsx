@@ -39,7 +39,7 @@ export const SettingsSidebar = forwardRef<
         <button
           onClick={logout}
           className={cn(
-            "w-full flex items-center gap-2 group/item hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-md"
+            "w-full flex items-center group/item hover:bg-neutral-100 dark:hover:bg-neutral-800 p-2 rounded-md"
           )}
         >
           <LogoutIcon />
